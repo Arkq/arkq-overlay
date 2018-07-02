@@ -17,14 +17,21 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
+IUSE="bindist +sndfile"
 
-RDEPEND="media-libs/libsndfile"
+RDEPEND="sndfile? ( media-libs/libsndfile )"
 DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 src_prepare() {
 	default
 	eautoreconf
+}
+
+src_configure() {
+	econf \
+		$(use_enable !bindist aptx422) \
+		$(use_with sndfile)
 }
 
 src_install() {
