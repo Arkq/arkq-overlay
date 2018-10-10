@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools
+inherit eutils autotools
 
 DESCRIPTION="Audio coding technology developed by Sony"
 HOMEPAGE="https://android.googlesource.com/platform/external/libldac"
@@ -18,12 +18,18 @@ fi
 
 LICENSE="Apache-2.0"
 SLOT="0"
-IUSE="static-libs"
+IUSE="debug static-libs"
 
 DOCS=( NOTICE )
 
 src_prepare() {
 	default
 	cp "${FILESDIR}"/* .
+	epatch "${FILESDIR}"/${PN}-debug-to-stderr.patch
 	eautoreconf
+}
+
+src_configure() {
+	econf \
+		$(use_enable debug)
 }

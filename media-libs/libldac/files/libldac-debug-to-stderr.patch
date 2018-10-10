@@ -1,0 +1,15 @@
+--- a/abr/src/ldacBT_abr.c
++++ b/abr/src/ldacBT_abr.c
+@@ -71,10 +71,9 @@ typedef struct _ldacbt_abr_param
+ #define clear_data(ptr, n) memset(ptr, 0, n)
+ 
+ #ifdef LOCAL_DEBUG
+-#include <android/log.h>
++#include <stdio.h>
+ #define ABRDBG(fmt, ... ) \
+-    __android_log_print( ANDROID_LOG_INFO, "******** LDAC ABR ********",\
+-            "%s@%s:%d::"fmt, __func__, __FILE__, __LINE__, ## __VA_ARGS__ )
++    fprintf(stderr, "%s@%s:%d::"fmt"\n", __func__, __FILE__, __LINE__, ## __VA_ARGS__ )
+ #else
+ #define ABRDBG(fmt, ...)
+ #endif /* LOCAL_DEBUG */
