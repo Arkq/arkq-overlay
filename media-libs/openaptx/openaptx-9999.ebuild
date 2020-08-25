@@ -17,7 +17,7 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="bindist +sndfile"
+IUSE="bindist +ffmpeg +sndfile"
 
 RDEPEND="sndfile? ( media-libs/libsndfile )"
 DEPEND="${RDEPEND}
@@ -31,6 +31,7 @@ src_prepare() {
 src_configure() {
 	econf \
 		$(use_enable !bindist aptx422) \
+		$(use_with ffmpeg) \
 		$(use_with sndfile)
 }
 
