@@ -1,7 +1,7 @@
 # Copyright 2010-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 inherit gnome2-utils qmake-utils
 
 DESCRIPTION="Educational simulation framework for a simple AI model"
