@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
-inherit autotools
+inherit cmake
 
 DESCRIPTION="Reverse-engineered apt-X library"
 HOMEPAGE="https://github.com/Arkq/openaptx"
@@ -17,24 +17,24 @@ fi
 
 LICENSE="MIT"
 SLOT="0"
-IUSE="bindist +ffmpeg +sndfile"
+IUSE="bindist doc +ffmpeg +sndfile"
 
-RDEPEND="sndfile? ( media-libs/libsndfile )"
+RDEPEND="
+	ffmpeg? ( media-video/ffmpeg )
+	sndfile? ( media-libs/libsndfile )"
 DEPEND="${RDEPEND}
+	doc? ( app-doc/doxygen )
 	virtual/pkgconfig"
 
 src_prepare() {
-	default
-	eautoreconf
+	cmake_src_prepare
 }
 
 src_configure() {
-	econf \
-		$(use_enable !bindist aptx422) \
-		$(use_with ffmpeg) \
-		$(use_with sndfile)
-}
-
-src_install() {
-	default
+	local mycmakeargs=(
+		-DENABLE_DOC="$(usex doc)"
+		-DWITH_FFMPEG="$(usex ffmpeg)"
+		-DWITH_SNDFILE="$(usex sndfile)"
+	)
+	cmake_src_configure
 }
